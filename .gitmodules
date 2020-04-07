@@ -1,0 +1,9 @@
+[submodule "xojo_ICC_connection"]
+	path = xojo_ICC_connection
+	url = https://github.com/avwohl/xojo_ICC_connection.git
+[submodule "xojo_AVW_settings"]
+	path = xojo_AVW_settings
+	url = https://github.com/avwohl/xojo_AVW_settings.git
+[submodule "xojo_AVW_utils"]
+	path = xojo_AVW_utils
+	url = https://github.com/avwohl/xojo_AVW_utils.git
