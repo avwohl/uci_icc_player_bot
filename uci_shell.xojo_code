@@ -37,7 +37,7 @@ Inherits Shell
 		  hub=ahub
 		  ExecuteMode = Shell.ExecuteModes.Interactive
 		  TimeOut = -1
-		  eater=new chess_uciok_consumer(hub)
+		  eater=new uci_uciok_consumer(hub)
 		End Sub
 	#tag EndMethod
 
@@ -52,7 +52,7 @@ Inherits Shell
 
 
 	#tag Property, Flags = &h0
-		eater As chess_consumer
+		eater As uci_consumer
 	#tag EndProperty
 
 	#tag Property, Flags = &h1

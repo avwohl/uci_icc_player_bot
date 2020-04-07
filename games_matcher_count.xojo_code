@@ -1,21 +1,33 @@
 #tag Class
-Protected Class chess_consumer
+Protected Class games_matcher_count
+Inherits games_matcher
 	#tag Method, Flags = &h0
-		Sub Constructor(ahub as player_hub)
-		  hub=ahub
+		Sub Constructor()
+		  number_of_games=0
 		End Sub
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Sub recieve(mesg as text)
-		  rem abstract super class
-		  #pragma unused mesg
-		End Sub
+		Function get_count() As integer
+		  return number_of_games
+		End Function
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Function match(key as integer, agame as ICC_DG_data_game_unified) As boolean
+		  // Calling the overridden superclass method.
+		  rem Super.match(key, agame)
+		  #pragma unused key
+		  if agame.being_played then
+		    number_of_games=number_of_games+1
+		  end if
+		  Return False
+		End Function
 	#tag EndMethod
 
 
-	#tag Property, Flags = &h0
-		hub As player_hub
+	#tag Property, Flags = &h1
+		Protected number_of_games As Integer
 	#tag EndProperty
 
 

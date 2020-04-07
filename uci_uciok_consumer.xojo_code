@@ -1,6 +1,6 @@
 #tag Class
-Protected Class chess_uciok_consumer
-Inherits chess_consumer
+Protected Class uci_uciok_consumer
+Inherits uci_consumer
 	#tag Method, Flags = &h0
 		Sub recieve(mesg as text)
 		  // Calling the overridden superclass method.
@@ -8,7 +8,7 @@ Inherits chess_consumer
 		  if mesg <> "uciok" then
 		    return
 		  end
-		  hub.chess_shell.eater=new chess_move_consumer(hub)
+		  hub.chess_shell.eater=new uci_move_consumer(hub)
 		End Sub
 	#tag EndMethod
 

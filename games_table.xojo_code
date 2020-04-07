@@ -1,5 +1,5 @@
 #tag Class
-Protected Class table_of_games
+Protected Class games_table
 	#tag Method, Flags = &h0
 		Sub Constructor()
 		  games=New Dictionary
@@ -8,7 +8,7 @@ Protected Class table_of_games
 
 	#tag Method, Flags = &h0
 		Function count_games_being_played() As Integer
-		  var matcher as table_match_count=new table_match_count
+		  var matcher as games_matcher_count=new games_matcher_count
 		  rem run matcher to apply matcher to each game, count stored in matcher
 		  rem result always -1 as matcher never matches, is run for side effect
 		  Var dummy_result As Integer=first_matching_game(matcher)
@@ -40,7 +40,7 @@ Protected Class table_of_games
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Function first_matching_game(amatcher as table_match) As Integer
+		Function first_matching_game(amatcher as games_matcher) As Integer
 		  rem return a game number ready to have a move computed or -1 if none
 		  For Each key_variant As Variant In games.Keys
 		    Var key As Integer=key_variant
@@ -60,7 +60,7 @@ Protected Class table_of_games
 
 	#tag Method, Flags = &h0
 		Function first_ready_game() As ICC_DG_data_game_unified
-		  var matcher As table_match=New table_match_ready
+		  var matcher As games_matcher=New games_matcher_ready
 		  var found As Integer=first_matching_game(matcher)
 		  Return find_game(found)
 		End Function

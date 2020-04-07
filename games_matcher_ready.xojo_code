@@ -1,34 +1,18 @@
 #tag Class
-Protected Class table_match_count
-Inherits table_match
+Protected Class games_matcher_ready
+Inherits games_matcher
 	#tag Method, Flags = &h0
-		Sub Constructor()
-		  number_of_games=0
-		End Sub
-	#tag EndMethod
-
-	#tag Method, Flags = &h0
-		Function get_count() As integer
-		  return number_of_games
-		End Function
-	#tag EndMethod
-
-	#tag Method, Flags = &h0
-		Function match(key as integer, agame as ICC_DG_data_game_unified) As boolean
+		Function match(key as integer, agame as ICC_DG_data_game_unified) As Boolean
 		  // Calling the overridden superclass method.
-		  rem Super.match(key, agame)
-		  #pragma unused key
-		  if agame.being_played then
-		    number_of_games=number_of_games+1
+		  if not Super.match(key, agame) then
+		    return false
 		  end if
-		  Return False
+		  if not agame.need_move_computed then
+		    return false
+		  end if
+		  return true
 		End Function
 	#tag EndMethod
-
-
-	#tag Property, Flags = &h1
-		Protected number_of_games As Integer
-	#tag EndProperty
 
 
 	#tag ViewBehavior

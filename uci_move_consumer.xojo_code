@@ -1,17 +1,28 @@
 #tag Class
-Protected Class table_match_ready
-Inherits table_match
+Protected Class uci_move_consumer
+Inherits uci_consumer
 	#tag Method, Flags = &h0
-		Function match(key as integer, agame as ICC_DG_data_game_unified) As Boolean
+		Sub recieve(mesg as text)
 		  // Calling the overridden superclass method.
-		  if not Super.match(key, agame) then
-		    return false
-		  end if
-		  if not agame.need_move_computed then
-		    return false
-		  end if
-		  return true
-		End Function
+		  rem Super.recieve(mesg)
+		  If mesg="bestmove (none)" Then
+		    app.warning("cleared game for (none)")
+		    hub.invalidate_current_game
+		    Return
+		  End If
+		  Var reg As New RegEx
+		  reg.SearchPattern="bestmove\s+([a-h1-8]+)"
+		  Var move_match As RegExMatch
+		  move_match=reg.search(mesg)
+		  If move_match=Nil Then
+		    app.warning("ignore uci response :"+mesg)
+		    Return
+		  End If
+		  Var move As Text=move_match.SubExpressionString(1).ToText
+		  rem pass move back to chess server
+		  hub.make_this_move(move)
+		  
+		End Sub
 	#tag EndMethod
 
 

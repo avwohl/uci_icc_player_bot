@@ -20,7 +20,7 @@ Inherits ICC_Hub
 		  got_keep_alive
 		  rem send a keepalive request as soon as possible
 		  update_next_keep_alive_ticks_time=0
-		  games=New table_of_games
+		  games=New games_table
 		  clear_current_game
 		  dg_map=new ICC_DG_debug
 		  xcn_map=new ICC_XCN_debug
@@ -448,7 +448,7 @@ Inherits ICC_Hub
 	#tag EndProperty
 
 	#tag Property, Flags = &h1
-		Protected games As table_of_games
+		Protected games As games_table
 	#tag EndProperty
 
 	#tag Property, Flags = &h0

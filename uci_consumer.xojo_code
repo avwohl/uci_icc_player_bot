@@ -1,13 +1,22 @@
 #tag Class
-Protected Class table_match
+Protected Class uci_consumer
 	#tag Method, Flags = &h0
-		Function match(key as integer, agame as ICC_DG_data_game_unified) As Boolean
-		  rem this is an abstract superclass so args not used
-		  #Pragma unused agame
-		  #pragma unused key
-		  Return True
-		End Function
+		Sub Constructor(ahub as player_hub)
+		  hub=ahub
+		End Sub
 	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Sub recieve(mesg as text)
+		  rem abstract super class
+		  #pragma unused mesg
+		End Sub
+	#tag EndMethod
+
+
+	#tag Property, Flags = &h0
+		hub As player_hub
+	#tag EndProperty
 
 
 	#tag ViewBehavior
