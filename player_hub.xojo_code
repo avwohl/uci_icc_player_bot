@@ -2,12 +2,6 @@
 Protected Class player_hub
 Inherits ICC_Hub
 	#tag Method, Flags = &h0
-		Sub ask_keepalive(user_name as string)
-		  send_line("/tell "+user_name+" keep_alive")
-		End Sub
-	#tag EndMethod
-
-	#tag Method, Flags = &h0
 		Sub clear_current_game()
 		  current_game=Nil
 		  current_game_timeout=0
@@ -338,15 +332,6 @@ Inherits ICC_Hub
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Sub send_line(astr as string)
-		  iccnet.Write(astr+Chr(10))
-		  If app.settings.get_integer("debug_data_to_icc")>0 Then
-		    app.outs("icc>"+astr)
-		  End If
-		End Sub
-	#tag EndMethod
-
-	#tag Method, Flags = &h0
 		Sub send_login()
 		  send_line("level1=1")
 		  send_line("level2settings="+login_L2_settings)
@@ -444,10 +429,6 @@ Inherits ICC_Hub
 
 	#tag Property, Flags = &h1
 		Protected games As games_table
-	#tag EndProperty
-
-	#tag Property, Flags = &h0
-		icc_net As ICC_Net
 	#tag EndProperty
 
 
