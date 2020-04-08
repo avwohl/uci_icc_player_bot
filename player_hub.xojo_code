@@ -45,7 +45,7 @@ Inherits ICC_Hub
 		  timeout_current_game
 		  Super.handle_timeouts
 		  If Not chess_shell.IsRunning Then
-		    app.fatal_error("chess shell stopped")
+		    Raise New uci_icc_error_uci_exited("chess shell stopped")
 		  End If
 		  
 		End Sub
@@ -411,7 +411,7 @@ Inherits ICC_Hub
 		  Var uci_argument As String=app.settings.get_string("uci_argument")
 		  chess_shell.execute(uci_program,uci_argument)
 		  If Not chess_shell.IsRunning Then
-		    app.fatal_error("execute engine failed, code="+(chess_shell.ExitCode.ToString))
+		    Raise New uci_icc_error_execute_failed("execute engine failed, code="+(chess_shell.ExitCode.ToString))
 		  End
 		End Sub
 	#tag EndMethod

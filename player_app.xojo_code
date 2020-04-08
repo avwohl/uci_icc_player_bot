@@ -7,7 +7,8 @@ Inherits ConsoleApplication
 		    app_startup(args(1))
 		    main_loop
 		  Catch e As RuntimeException
-		    app.fatal_error("fatal:"+e.Message)
+		    Print("fatal:"+e.Message)
+		    Quit
 		  End Try
 		End Function
 	#tag EndEvent
@@ -42,14 +43,6 @@ Inherits ConsoleApplication
 		  
 		  keep_going=True
 		  hub=New player_hub
-		End Sub
-	#tag EndMethod
-
-	#tag Method, Flags = &h0
-		Sub fatal_error(mesg as string)
-		  outs(mesg)
-		  keep_going=False
-		  Quit
 		End Sub
 	#tag EndMethod
 
