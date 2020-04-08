@@ -16,14 +16,9 @@ Inherits ICC_Hub
 
 	#tag Method, Flags = &h0
 		Sub Constructor()
-		  rem allow connect to have the full keepalive time to work
-		  got_keep_alive
-		  rem send a keepalive request as soon as possible
-		  update_next_keep_alive_ticks_time=0
+		  Super.Constructor 
 		  games=New games_table
 		  clear_current_game
-		  dg_map=new ICC_DG_debug
-		  xcn_map=new ICC_XCN_debug
 		  icc_net=new ICC_Net(SELF)
 		  chess_shell=New uci_shell(Self)
 		  start_uci_bot
