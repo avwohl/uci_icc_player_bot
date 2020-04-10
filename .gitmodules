@@ -7,3 +7,6 @@
 [submodule "xojo_AVW_utils"]
 	path = xojo_AVW_utils
 	url = https://github.com/avwohl/xojo_AVW_utils.git
+[submodule "xojo_documentation"]
+	path = xojo_documentation
+	url = https://github.com/avwohl/xojo_documentation.git
