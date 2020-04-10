@@ -13,7 +13,7 @@ Inherits ICC_Hub
 		  Super.Constructor 
 		  games=New games_table
 		  clear_current_game
-		  icc_net=new ICC_Net(SELF)
+		  iccnet=new ICC_Net(SELF)
 		  chess_shell=New uci_shell(Self)
 		  start_uci_bot
 		  chess_shell.send_line(app.settings.get_string("uci_startup").ToText)

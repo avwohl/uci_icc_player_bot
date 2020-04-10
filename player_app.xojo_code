@@ -16,9 +16,15 @@ Inherits ConsoleApplication
 
 	#tag Method, Flags = &h1
 		Protected Sub app_startup(arg as string)
+		  Var my_build As DateTIme
+		  my_build=App.BuildDate
+		  outs("*** uci_icc_player_bot build on "+my_build.ToString)
+		  outs("version "+app.Version)
+		  
 		  settings=New AVW_settings(New AVW_settings_printer)
 		  // add all the known settings here
 		  // if a setting in this list is missing it will throw an error in the check
+		  settings.define("event_sleep_ms")
 		  settings.define("ask_icc_every_seconds")
 		  settings.define("chess_startup")
 		  settings.define("debug_data_from_uci")
@@ -54,9 +60,10 @@ Inherits ConsoleApplication
 
 	#tag Method, Flags = &h1
 		Protected Sub main_loop()
+		  Var sleep_time As Integer=app.settings.get_integer("event_sleep_ms")
 		  While get_keep_going
 		    hub.handle_timeouts
-		    DoEvents(1)
+		    DoEvents(sleep_time)
 		  Wend
 		End Sub
 	#tag EndMethod
