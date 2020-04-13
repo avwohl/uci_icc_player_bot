@@ -1,6 +1,6 @@
 #tag Class
 Protected Class player_hub
-Inherits ICC_Hub
+Inherits ICC_connection.ICC_Hub
 	#tag Method, Flags = &h0
 		Sub clear_current_game()
 		  current_game=Nil
@@ -13,7 +13,7 @@ Inherits ICC_Hub
 		  Super.Constructor 
 		  games=New games_table
 		  clear_current_game
-		  iccnet=new ICC_Net(SELF)
+		  iccnet=new ICC_connection.ICC_Net(SELF)
 		  chess_shell=New uci_shell(Self)
 		  start_uci_bot
 		  chess_shell.send_line(app.settings.get_string("uci_startup").ToText)
@@ -76,8 +76,8 @@ Inherits ICC_Hub
 		    Return
 		  end if
 		  send_line(amove)
-		  Var jbo As ICC_DG_data_jboard=current_game.get_jboard
-		  Var rel As ICC_DG_data_game_relation=current_game.get_game_relation
+		  Var jbo As ICC_connection.ICC_DG_data_jboard=current_game.get_jboard
+		  Var rel As ICC_connection.ICC_DG_data_game_relation=current_game.get_game_relation
 		  jbo.set_color_on_move(rel.get_opponent_color)
 		  clear_current_game
 		  
@@ -89,7 +89,7 @@ Inherits ICC_Hub
 		Sub NetEventDataReceived_disabled()
 		  debug_print_string("DataReceived event")
 		  rem super.NetEventDataReceived
-		  ICC_Hub.NetEventDataReceived
+		  ICC_connection.ICC_Hub.NetEventDataReceived
 		End Sub
 	#tag EndMethod
 
@@ -128,11 +128,11 @@ Inherits ICC_Hub
 		  If current_game<>Nil Then
 		    Return
 		  End If
-		  Var agame As ICC_DG_data_game_unified = games.first_ready_game
+		  Var agame As ICC_connection.ICC_DG_data_game_unified = games.first_ready_game
 		  If agame = Nil Then
 		    Return
 		  End If
-		  Var jboard As ICC_DG_data_jboard=agame.get_jboard
+		  Var jboard As ICC_connection.ICC_DG_data_jboard=agame.get_jboard
 		  Var board As String = jboard.board
 		  Var fen_board As Text=""
 		  Var blank_count As Integer=0
@@ -190,14 +190,14 @@ Inherits ICC_Hub
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Sub recieve_L1(a_dg As ICC_Datagram)
+		Sub recieve_L1(a_dg As ICC_connection.ICC_Datagram)
 		  var dg_name_text as text = xcn_map.get_datagram_name(a_dg.nums(0))
 		  print_dg("L1",dg_name_text,a_dg)
 		End Sub
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Function recieve_L2(a_dg as ICC_Datagram) As boolean
+		Function recieve_L2(a_dg as ICC_connection.ICC_Datagram) As boolean
 		  Var dgram_num As Integer = a_dg.nums(0)
 		  If Super.recieve_L2(a_dg) Then
 		    Return True
@@ -208,9 +208,9 @@ Inherits ICC_Hub
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Function recieve_L2_jboard(myj as ICC_DG_data_jboard) As Boolean
+		Function recieve_L2_jboard(myj as ICC_connection.ICC_DG_data_jboard) As Boolean
 		  ignore_boolean(Super.recieve_L2_jboard(myj))
-		  Var myd As ICC_DG_data_game_unified=games.find_game(myj.game_num)
+		  Var myd As ICC_connection.ICC_DG_data_game_unified=games.find_game(myj.game_num)
 		  myd.set_jboard(myj)
 		  games.store_game(myj.game_num,myd)
 		  pick_a_move
@@ -220,7 +220,7 @@ Inherits ICC_Hub
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Function recieve_L2_match(adat as ICC_DG_data_match) As boolean
+		Function recieve_L2_match(adat as ICC_connection.ICC_DG_data_match) As boolean
 		  ignore_boolean(Super.recieve_L2_match(adat))
 		  Var games_going_on As Integer=games.count_games_being_played
 		  if games_going_on >= MAX_GAMES then
@@ -240,7 +240,7 @@ Inherits ICC_Hub
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Function recieve_L2_my_game_result(myr as ICC_DG_data_my_game_result) As Boolean
+		Function recieve_L2_my_game_result(myr as ICC_connection.ICC_DG_data_my_game_result) As Boolean
 		  ignore_boolean(Super.recieve_L2_my_game_result(myr))
 		  games.delete(myr.game_num)
 		  If current_game=Nil Then
@@ -256,13 +256,13 @@ Inherits ICC_Hub
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Function recieve_L2_my_game_started(myg AS ICC_DG_data_my_game_started) As boolean
+		Function recieve_L2_my_game_started(myg AS ICC_connection.ICC_DG_data_my_game_started) As boolean
 		  ignore_boolean(Super.recieve_L2_my_game_started(myg))
-		  Var myd As ICC_DG_data_game_unified=New ICC_DG_data_game_unified
+		  Var myd As ICC_connection.ICC_DG_data_game_unified=New ICC_connection.ICC_DG_data_game_unified
 		  myd.set_game_started(myg)
 		  rem synthisize the corrent relation to this game as it won't
 		  rem be sent by the chess server because ... no clue
-		  Var myrel As ICC_DG_data_game_relation=New ICC_DG_data_game_relation
+		  Var myrel As ICC_connection.ICC_DG_data_game_relation=New ICC_connection.ICC_DG_data_game_relation
 		  myrel.game_num=myg.game_num
 		  Var my_color As Text="W"
 		  If myg.black_username = Self.user_name Then
@@ -276,10 +276,10 @@ Inherits ICC_Hub
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Function recieve_L2_my_relation_to_game(agr as ICC_DG_data_game_relation) As boolean
+		Function recieve_L2_my_relation_to_game(agr as ICC_connection.ICC_DG_data_game_relation) As boolean
 		  // Calling the overridden superclass method.
 		  AVW_util.ignore_boolean(Super.recieve_L2_my_relation_to_game(agr))
-		  Var myd As ICC_DG_data_game_unified=games.find_game(agr.game_num)
+		  Var myd As ICC_connection.ICC_DG_data_game_unified=games.find_game(agr.game_num)
 		  myd.set_game_relation(agr)
 		  games.store_game(agr.game_num,myd)
 		  Return True
@@ -347,7 +347,7 @@ Inherits ICC_Hub
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Sub set_current_game(agame as ICC_DG_data_game_unified)
+		Sub set_current_game(agame as ICC_connection.ICC_DG_data_game_unified)
 		  current_game=agame
 		  current_game_timeout=System.Ticks+60
 		End Sub
@@ -367,18 +367,18 @@ Inherits ICC_Hub
 		  // Calling the overridden superclass method.
 		  Super.startup
 		  
-		  setup_L2(ICC_DG.DG_WHO_AM_I)
-		  // setup_L2(ICC_DG.DG_CHANNEL_TELL)
-		  setup_L2(ICC_DG.DG_PERSONAL_TELL)
-		  // setup_L2(ICC_DG.DG_SHOUT)
-		  setup_L2(ICC_DG.DG_MY_GAME_STARTED)
-		  setup_L2(ICC_DG.DG_MY_GAME_RESULT)
-		  setup_L2(ICC_DG.DG_MY_RELATION_TO_GAME)
-		  setup_L2(ICC_DG.DG_JBOARD)
-		  setup_L2(ICC_DG.DG_MATCH)
-		  // setup_L2(ICC_DG.DG_MSEC)
-		  setup_L2(ICC_DG.DG_ILLEGAL_MOVE)
-		  setup_L2(ICC_DG.DG_OFFERS_IN_MY_GAME)
+		  setup_L2(ICC_connection.ICC_DG.DG_WHO_AM_I)
+		  // setup_L2(ICC_connection.ICC_DG.DG_CHANNEL_TELL)
+		  setup_L2(ICC_connection.ICC_DG.DG_PERSONAL_TELL)
+		  // setup_L2(ICC_connection.ICC_DG.DG_SHOUT)
+		  setup_L2(ICC_connection.ICC_DG.DG_MY_GAME_STARTED)
+		  setup_L2(ICC_connection.ICC_DG.DG_MY_GAME_RESULT)
+		  setup_L2(ICC_connection.ICC_DG.DG_MY_RELATION_TO_GAME)
+		  setup_L2(ICC_connection.ICC_DG.DG_JBOARD)
+		  setup_L2(ICC_connection.ICC_DG.DG_MATCH)
+		  // setup_L2(ICC_connection.ICC_DG.DG_MSEC)
+		  setup_L2(ICC_connection.ICC_DG.DG_ILLEGAL_MOVE)
+		  setup_L2(ICC_connection.ICC_DG.DG_OFFERS_IN_MY_GAME)
 		  
 		  make_connection
 		End Sub
@@ -420,7 +420,7 @@ Inherits ICC_Hub
 	#tag EndProperty
 
 	#tag Property, Flags = &h1
-		Protected current_game As ICC_DG_data_game_unified
+		Protected current_game As ICC_connection.ICC_DG_data_game_unified
 	#tag EndProperty
 
 	#tag Property, Flags = &h1

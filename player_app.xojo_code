@@ -1,6 +1,7 @@
 #tag Class
 Protected Class player_app
 Inherits ConsoleApplication
+Implements AVW_util.outputer
 	#tag Event
 		Function Run(args() as String) As Integer
 		  Try
@@ -21,7 +22,7 @@ Inherits ConsoleApplication
 		  outs("*** uci_icc_player_bot build on "+my_build.ToString)
 		  outs("version "+app.Version)
 		  
-		  settings=New AVW_settings(New AVW_settings_printer)
+		  settings=New AVW_settings_module.AVW_settings
 		  // add all the known settings here
 		  // if a setting in this list is missing it will throw an error in the check
 		  settings.define("event_sleep_ms")
@@ -41,11 +42,13 @@ Inherits ConsoleApplication
 		  settings.define("uci_think_time_ms")
 		  settings.define("user")
 		  
-		  settings.read_file(arg)
+		  settings.read_file(app,arg)
 		  // report missing settings now at startup
 		  // rather than much later while running
 		  settings.check
-		  settings.outs
+		  
+		  Var settings_printer As New AVW_settings_module.AVW_settings_print_each_iterator(Self)
+		  settings.for_each_setting(settings_printer)
 		  
 		  keep_going=True
 		  hub=New player_hub
@@ -69,8 +72,11 @@ Inherits ConsoleApplication
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Sub outs(sendme as string)
-		  Print(sendme)
+		Sub outs(outme as string)
+		  // Part of the AVW_util.outputer interface.
+		  
+		  Print(outme)
+		  
 		End Sub
 	#tag EndMethod
 
@@ -90,7 +96,7 @@ Inherits ConsoleApplication
 	#tag EndProperty
 
 	#tag Property, Flags = &h0
-		settings As AVW_settings
+		settings As AVW_settings_module.AVW_settings
 	#tag EndProperty
 
 

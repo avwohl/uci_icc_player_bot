@@ -1,7 +1,7 @@
 #tag Class
 Protected Class games_matcher
 	#tag Method, Flags = &h0
-		Function match(key as integer, agame as ICC_DG_data_game_unified) As Boolean
+		Function match(key as integer, agame as ICC_connection.ICC_DG_data_game_unified) As Boolean
 		  rem this is an abstract superclass so args not used
 		  #Pragma unused agame
 		  #pragma unused key

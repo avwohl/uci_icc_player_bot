@@ -14,7 +14,7 @@ Inherits games_matcher
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Function match(key as integer, agame as ICC_DG_data_game_unified) As boolean
+		Function match(key as integer, agame as ICC_connection.ICC_DG_data_game_unified) As boolean
 		  // Calling the overridden superclass method.
 		  rem Super.match(key, agame)
 		  #pragma unused key

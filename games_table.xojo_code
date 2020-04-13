@@ -18,7 +18,7 @@ Protected Class games_table
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Function create_game(agame_num as integer) As ICC_DG_data_game_unified
+		Function create_game(agame_num as integer) As ICC_connection.ICC_DG_data_game_unified
 		  if games.haskey(agame_num) then
 		    games.Remove(agame_num)
 		  end if
@@ -33,8 +33,8 @@ Protected Class games_table
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Function find_game(agame_num as integer) As ICC_DG_data_game_unified
-		  var default_empty_game As ICC_DG_data_game_unified=Nil
+		Function find_game(agame_num as integer) As ICC_connection.ICC_DG_data_game_unified
+		  var default_empty_game As ICC_connection.ICC_DG_data_game_unified=Nil
 		  return games.Lookup(agame_num,default_empty_game)
 		End Function
 	#tag EndMethod
@@ -44,7 +44,7 @@ Protected Class games_table
 		  rem return a game number ready to have a move computed or -1 if none
 		  For Each key_variant As Variant In games.Keys
 		    Var key As Integer=key_variant
-		    Var agame As ICC_DG_data_game_unified=games.lookup(key,Nil)
+		    Var agame As ICC_connection.ICC_DG_data_game_unified=games.lookup(key,Nil)
 		    If agame=Nil Then
 		      rem key present but nil game, should not happen, clean up
 		      games.remove(key)
@@ -59,7 +59,7 @@ Protected Class games_table
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Function first_ready_game() As ICC_DG_data_game_unified
+		Function first_ready_game() As ICC_connection.ICC_DG_data_game_unified
 		  var matcher As games_matcher=New games_matcher_ready
 		  var found As Integer=first_matching_game(matcher)
 		  Return find_game(found)
@@ -67,7 +67,7 @@ Protected Class games_table
 	#tag EndMethod
 
 	#tag Method, Flags = &h0
-		Sub store_game(agame_num as integer, agame as ICC_DG_data_game_unified)
+		Sub store_game(agame_num as integer, agame as ICC_connection.ICC_DG_data_game_unified)
 		  games.value(agame_num)=agame
 		End Sub
 	#tag EndMethod
