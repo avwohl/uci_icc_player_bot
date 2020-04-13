@@ -438,30 +438,6 @@ Inherits ICC_Hub
 
 	#tag ViewBehavior
 		#tag ViewProperty
-			Name="update_next_keep_alive_ticks_time"
-			Visible=false
-			Group="Behavior"
-			InitialValue="0"
-			Type="Integer"
-			EditorType=""
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="login_L2_settings"
-			Visible=false
-			Group="Behavior"
-			InitialValue=""
-			Type="String"
-			EditorType="MultiLineEditor"
-		#tag EndViewProperty
-		#tag ViewProperty
-			Name="logged_in"
-			Visible=false
-			Group="Behavior"
-			InitialValue="false"
-			Type="Boolean"
-			EditorType=""
-		#tag EndViewProperty
-		#tag ViewProperty
 			Name="Index"
 			Visible=true
 			Group="ID"
