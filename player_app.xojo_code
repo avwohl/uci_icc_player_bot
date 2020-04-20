@@ -47,7 +47,7 @@ Implements AVW_util.outputer
 		  // rather than much later while running
 		  settings.check
 		  
-		  Var settings_printer As New AVW_settings_module.AVW_settings_print_each_iterator(Self)
+		  Var settings_printer As New AVW_settings_print_each_iterator(Self)
 		  settings.for_each_setting(settings_printer)
 		  
 		  keep_going=True
