@@ -11,7 +11,9 @@ Inherits uci_consumer
 		    Return
 		  End If
 		  Var reg As New RegEx
-		  reg.SearchPattern="bestmove\s+([a-h1-8]+)"
+		  // reg.SearchPattern="bestmove\s+([a-h1-8]+)"
+		  // alow specifying queening character
+		  reg.SearchPattern="bestmove\s+(.+)"
 		  Var move_match As RegExMatch
 		  move_match=reg.search(mesg)
 		  If move_match=Nil Then
