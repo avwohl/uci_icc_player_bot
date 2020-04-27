@@ -178,9 +178,10 @@ Inherits ICC_connection.ICC_Hub
 		  If jboard.double_push> 0 Then
 		    enpassant=AVW_util.nth_digit(jboard.double_push)
 		  End If
+		  Var whole_move_number As Integer=Floor(jboard.move_number/2)
 		  Var space As Text=AVW_util.to_text(" ")
 		  fen_board=fen_board+enpassant+space+jboard.move_number.totext+space
-		  fen_board=fen_board+(Floor(jboard.move_number/2).totext)
+		  fen_board=fen_board+(whole_move_number.totext)
 		  Var find_move As String="position fen """+fen_board+""""
 		  set_current_game(agame)
 		  chess_shell.send_line(find_move.ToText)
@@ -437,6 +438,30 @@ Inherits ICC_connection.ICC_Hub
 
 
 	#tag ViewBehavior
+		#tag ViewProperty
+			Name="logged_in"
+			Visible=false
+			Group="Behavior"
+			InitialValue="false"
+			Type="Boolean"
+			EditorType=""
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="login_L2_settings"
+			Visible=false
+			Group="Behavior"
+			InitialValue=""
+			Type="String"
+			EditorType="MultiLineEditor"
+		#tag EndViewProperty
+		#tag ViewProperty
+			Name="update_next_keep_alive_ticks_time"
+			Visible=false
+			Group="Behavior"
+			InitialValue="0"
+			Type="Integer"
+			EditorType=""
+		#tag EndViewProperty
 		#tag ViewProperty
 			Name="Index"
 			Visible=true

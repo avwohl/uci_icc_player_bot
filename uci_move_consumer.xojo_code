@@ -13,7 +13,7 @@ Inherits uci_consumer
 		  Var reg As New RegEx
 		  // reg.SearchPattern="bestmove\s+([a-h1-8]+)"
 		  // alow specifying queening character
-		  reg.SearchPattern="bestmove\s+(.+)"
+		  reg.SearchPattern="bestmove\s+(\S+)"
 		  Var move_match As RegExMatch
 		  move_match=reg.search(mesg)
 		  If move_match=Nil Then
