@@ -224,7 +224,7 @@ Inherits ICC_connection.ICC_Hub
 		Function recieve_L2_match(adat as ICC_connection.ICC_DG_data_match) As boolean
 		  ignore_boolean(Super.recieve_L2_match(adat))
 		  Var games_going_on As Integer=games.count_games_being_played
-		  if games_going_on >= MAX_GAMES then
+		  If games_going_on >= MAX_GAMES Then
 		    var mesg As Text="Sorry im full, already playing "+games_going_on.ToText+" games."
 		    tell(adat.challenger_username,mesg)
 		    Return True
@@ -235,6 +235,7 @@ Inherits ICC_connection.ICC_Hub
 		  else
 		    send_line("accept "+adat.challenger_username)
 		  End If
+		  send_seek
 		  Return True
 		  
 		End Function
@@ -244,6 +245,7 @@ Inherits ICC_connection.ICC_Hub
 		Function recieve_L2_my_game_result(myr as ICC_connection.ICC_DG_data_my_game_result) As Boolean
 		  ignore_boolean(Super.recieve_L2_my_game_result(myr))
 		  games.delete(myr.game_num)
+		  send_seek
 		  If current_game=Nil Then
 		    Return True
 		  End If
@@ -340,10 +342,21 @@ Inherits ICC_connection.ICC_Hub
 		  send_line(app.settings.get_string("user"))
 		  send_line(app.settings.get_string("password"))
 		  send_line(app.settings.get_string("chess_startup"))
-		  
+		  send_seek
 		  rem may need to be TD to set buffers
 		  rem send_line("set tcp_input_size 60000")
 		  rem send_line("set tcp_output_size 60000")
+		End Sub
+	#tag EndMethod
+
+	#tag Method, Flags = &h0
+		Sub send_seek()
+		  Var games_going_on As Integer=games.count_games_being_played
+		  // stop seeking if nearly full
+		  If games_going_on >= (MAX_GAMES-5) Then
+		    Return
+		  End If
+		  send_line("ali-seek")
 		End Sub
 	#tag EndMethod
 
