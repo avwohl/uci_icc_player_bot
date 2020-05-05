@@ -9,6 +9,13 @@ Implements AVW_util.outputer
 		    main_loop
 		  Catch e As RuntimeException
 		    Print("fatal:"+e.Message)
+		    // Print("fatal_reason:"+(e.Reason).ToString)
+		    Var levels() As String
+		    levels=e.stack
+		    For i As Integer=levels.FirstRowIndex To levels.LastRowIndex
+		      Var alevel As String=levels(i)
+		      Print(AVW_util.to_text("stack:")+alevel)
+		    Next i
 		    Quit
 		  End Try
 		End Function
@@ -28,6 +35,8 @@ Implements AVW_util.outputer
 		  settings.define("event_sleep_ms")
 		  settings.define("ask_icc_every_seconds")
 		  settings.define("chess_startup")
+		  settings.define("chess_startup1")
+		  settings.define("chess_startup2")
 		  settings.define("debug_data_from_uci")
 		  settings.define("debug_data_to_icc")
 		  settings.define("debug_data_to_uci")

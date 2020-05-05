@@ -283,6 +283,9 @@ Inherits ICC_connection.ICC_Hub
 		  // Calling the overridden superclass method.
 		  AVW_util.ignore_boolean(Super.recieve_L2_my_relation_to_game(agr))
 		  Var myd As ICC_connection.ICC_DG_data_game_unified=games.find_game(agr.game_num)
+		  If myd = Nil Then
+		    Return True
+		  End If
 		  myd.set_game_relation(agr)
 		  games.store_game(agr.game_num,myd)
 		  Return True
@@ -342,6 +345,8 @@ Inherits ICC_connection.ICC_Hub
 		  send_line(app.settings.get_string("user"))
 		  send_line(app.settings.get_string("password"))
 		  send_line(app.settings.get_string("chess_startup"))
+		  send_line(app.settings.get_string("chess_startup1"))
+		  send_line(app.settings.get_string("chess_startup2"))
 		  send_seek
 		  rem may need to be TD to set buffers
 		  rem send_line("set tcp_input_size 60000")
