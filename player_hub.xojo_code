@@ -182,11 +182,11 @@ Inherits ICC_connection.ICC_Hub
 		  Var space As Text=AVW_util.to_text(" ")
 		  fen_board=fen_board+enpassant+space+jboard.move_number.totext+space
 		  fen_board=fen_board+(whole_move_number.totext)
-		  Var find_move As String="position fen """+fen_board+""""
+		  Var find_move As String="position fen "+fen_board
 		  set_current_game(agame)
 		  chess_shell.send_line(find_move.ToText)
 		  Var move_time_string As String=app.settings.get_string("uci_think_time_ms")
-		  chess_shell.send_line("go move time "+move_time_string.ToText)
+		  chess_shell.send_line("go movetime "+move_time_string.ToText)
 		End Sub
 	#tag EndMethod
 
